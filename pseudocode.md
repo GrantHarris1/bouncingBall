@@ -1,33 +1,74 @@
-// Creating new objects
+# Creating new objects
 
-Change Ball() to Shape() constructor
-* make Shape difine x,y,velX,velY same as Ball() did.
-* Define new property called 'exists', to track wether ball exists in program. should be boolean (true/false).
-* Ball() to inherite properties from the Shape() contructor.
-    * should also difine color & size like 'Ball' did.
-* Set Balls Constructors prototype and constructor appropriately.
-* Ball prototytpe's collisionDetect() should be small update. if kept as is EvilCircle would start eating the bouncing balls by setting exists property to 'false'. Would reduce the number of balls involved in collision detection.A ball needs to be considered for collision detection only if the exists property is 'true'. Replace the existing collisionDetect() code with the following code:
+### Changing ball construstor to Shape: newShape
 
-Ball.protoype.collisionDetect = function() {
-    for (let j = 0; j < balls.length; j++) {
-        if (!(this === balls[j]) && balls[j].exists) {
-            const dx = this.x - balls[j].x;
-            const dy = this.y - balls[j].y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            if (distance < this.size + balls[j].size) {
-                balls[j].color = this.color = 'rgb(' + random (0,255)
-            }
-        }
-    }
+function Shape(x, y, velx, vely, exists){
+this.x = x;
+this.y = y;
+this.velX = velX;
+this.velY = velY;
+this.exists = exists;
+};
+____
+### NEW Ball constructor. newBall:
+
+function Ball(x, y , velX, velY, exists); /*inherits from shape */
+Shape.call(x, y, velX, velY, exists, color, size){
+    this.color = color; // brought from old BALL
+    this.size = size
 }
+____
+#### Balls prototype and construtor
 
-only addition is the check f ball exists using balls[j].exists in the 'If' coditional.
+Ball.prototype = Object.create(Shape.prototype);
+Ball.prototype.constructor = Ball;
+____
+### Change Balls collisionDetect() 
 
-// defining Evil Circle
+Use new sample code to replaces ball collision detect.
+* if statement is where Balls exists in the conditional.
+____
+#### Draw and Update constructors for Bll stay the same.
+___
+# Evil Circle
+### Defining evilCircle
+* Inherits from Shape()
+    * velx, velY = 20
+    * properties color: white, size:10
+* Shape.call (this,x,y,20,20,exists)
 
-Evil Circle should inherit x,y,velX, velY, exists from Shape(), but velX, velY should always = 20.
 
-Do Shape.call (this, x,y,20,20, exists)
-*should difine own properties
-    *color-'white'
-    *size - 10
+
+
+
+
+## evilCirlce Methods
+### Draw()
+* Copy Balls draw, then change:
+    * Change fillStyle to strokeStyle
+    * Change fill to stroke
+    * Call linewidth to 3
+___
+
+### checkBounds()
+* Copy: Ball.protoype.update, then change:
+    * Get rid of the last 2 lines,
+    * inside *if* if test returns true dont update velX/velY rather change the value of x/y so evilCircle bounces back on screen. add or subtracting the size property.
+___
+
+### Set Controls
+* Put sample code for onkeydown inside the method definition
+    * sets key controls for " d,w,s,a"
+___
+
+### evilCollision Detect
+* Copy Balls collision detect()
+    * Change outer *if* statement to no longer check if current ball in the iteration is the same as the ball that is ding the checking. Instead check to see if ball being checked exists.
+    * in the inner *if* statement, dont make objects cange color when collison, instead ste them to not exist any longer.
+___
+### evilCircle into program
+* Changses to loop function
+* Create new evilCircle object instance
+    * call its set controls
+
+    
