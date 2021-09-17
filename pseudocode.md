@@ -70,5 +70,18 @@ ___
 * Changses to loop function
 * Create new evilCircle object instance
     * call its set controls
+    * only needed once
+* Where you loop through every ball call your draw(),update(),and collisionDetection() functions put these inside where the ball 'exists'
+* call Balls instance: draw(),checkBounds(), and collosiionDetect() methods on every itereation of loop.
+___
+
+### Score Counter
+
+* Add <p> in HTML
+    * add text : Ball count
+* Add css provided in sample
+* in JS create a Var that references the Para.
+* keep count of balls.
+
 
     
